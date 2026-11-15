@@ -1,0 +1,35 @@
+from collections import Counter
+class Solution:
+    def minWindow(self, s, t):
+        if t == "": return ""
+        if len(t) > len(s):
+            return ""
+        tCount = Counter(t)
+        sCount = Counter()
+        print(tCount.items())
+        l = 0 
+        results = []
+        minSoFar = float('infinity')
+        requirements = 0 
+        res = [-1,-1]
+
+        for r in range(len(s)):
+            if s[r] in tCount:
+                sCount[s[r]] += 1
+                if sCount[s[r]] == tCount[s[r]]:
+                    requirements += 1
+                    
+            while len(sCount) == len(tCount) and requirements == len(tCount): 
+                if ((r-l) + 1) <= minSoFar:
+                    res = [l,r]
+                    minSoFar = (r-l) + 1
+                
+                if s[l] in tCount:
+                    sCount[s[l]] -= 1
+                    if sCount[s[l]] < tCount[s[l]]:
+                        requirements -= 1
+                l += 1
+        l,r = res
+        return s[l:r+1] if minSoFar != float('infinity') else "" 
+
+    # Checking for matches 
