@@ -1,0 +1,19 @@
+from collections import Counter
+class Solution:
+    def checkInclusion(self, s1: str, s2: str) -> bool:
+        s1Count = Counter(s1)
+        s2Count = Counter()
+        l = 0 
+
+        for r in range(len(s2)):
+            s2Count[s2[r]] += 1
+
+            while sum(s2Count.values()) > sum(s1Count.values()):
+                s2Count[s2[l]] -= 1
+                l += 1
+            if s2Count == s1Count:
+                return True
+        return False
+
+
+
